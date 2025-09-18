@@ -1,3 +1,10 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "homepage-hero",
+      "description": "A vibrant flat lay of fresh herbs and spices on a dark slate background.",
+      "imageUrl": "https://picsum.photos/seed/herbology/1200/600",
+      "imageHint": "herbs cooking"
+    }
+  ]
 }
