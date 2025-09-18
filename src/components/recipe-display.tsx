@@ -31,13 +31,13 @@ export function RecipeDisplay({ recipe }: RecipeDisplayProps) {
         <div className="flex items-start justify-between gap-4">
           <div>
             <CardTitle className="font-headline text-3xl">{recipe.recipeName}</CardTitle>
-            <CardDescription className="mt-2">A unique recipe generated just for you.</CardDescription>
+            <CardDescription className="mt-2">Una receta única generada solo para ti.</CardDescription>
           </div>
           <Button
             variant="ghost"
             size="icon"
             onClick={handleFavoriteToggle}
-            aria-label={isRecipeFavorite ? 'Remove from favorites' : 'Save to favorites'}
+            aria-label={isRecipeFavorite ? 'Quitar de favoritos' : 'Guardar en favoritos'}
             className="shrink-0"
           >
             <Heart className={isRecipeFavorite ? 'fill-red-500 text-red-500' : 'text-muted-foreground'} />
@@ -46,7 +46,7 @@ export function RecipeDisplay({ recipe }: RecipeDisplayProps) {
       </CardHeader>
       <CardContent className="space-y-6">
         <div>
-          <h3 className="font-headline text-xl font-semibold">Ingredients</h3>
+          <h3 className="font-headline text-xl font-semibold">Ingredientes</h3>
           <Separator className="my-2" />
           <ul className="grid grid-cols-1 gap-x-8 gap-y-2 sm:grid-cols-2">
             {recipe.ingredients.map((ingredient, index) => (
@@ -58,9 +58,9 @@ export function RecipeDisplay({ recipe }: RecipeDisplayProps) {
           </ul>
         </div>
         <div>
-          <h3 className="font-headline text-xl font-semibold">Instructions</h3>
+          <h3 className="font-headline text-xl font-semibold">Instrucciones</h3>
           <Separator className="my-2" />
-          <div className="prose prose-p:my-2 prose-ol:my-2 prose-ol:list-decimal prose-ol:pl-5 space-y-2 text-foreground/90">
+          <div className="prose prose-p:my-2 prose-ol:my-2 prose-ol:list-decimal prose-ol:pl-5 space-y-2 text-foreground/90 dark:prose-invert">
             {recipe.instructions.split('\n').map((step, index) => (
                 step.trim() && <p key={index}>{step}</p>
             ))}

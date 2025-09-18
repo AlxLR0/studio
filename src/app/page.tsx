@@ -33,22 +33,22 @@ export default function Home() {
       if (result.recipe.suitable) {
         setRecipe(result.recipe);
       } else {
-        setError(result.recipe.reason || 'These ingredients are not suitable for a recipe. Please try others.');
+        setError(result.recipe.reason || 'Estos ingredientes no son adecuados para una receta. Por favor, intenta con otros.');
       }
     } else {
-      setError('An unexpected error occurred. Please try again.');
+      setError('Ocurrió un error inesperado. Por favor, inténtalo de nuevo.');
     }
     setLoading(false);
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 md:py-12">
+    <div className="container mx-auto px-4 py-8 md:py-12 animate-in fade-in-50 duration-1000">
       <div className="mx-auto max-w-3xl text-center">
-        <h1 className="font-headline text-4xl font-bold tracking-tight text-primary md:text-5xl">
-          What&apos;s in your pantry?
+        <h1 className="font-headline text-4xl font-extrabold tracking-tight text-primary md:text-6xl">
+          ¿Qué tienes en tu despensa?
         </h1>
         <p className="mt-4 text-lg text-foreground/80">
-          Enter the ingredients you have on hand, and let Herbology AI craft a unique recipe for you.
+          Introduce los ingredientes que tienes a mano y deja que Herbology AI cree una receta única para ti.
         </p>
       </div>
 
@@ -60,15 +60,15 @@ export default function Home() {
         {loading && (
           <div className="flex flex-col items-center justify-center gap-4 py-16 text-center">
             <LoaderCircle className="h-12 w-12 animate-spin text-primary" />
-            <p className="font-headline text-xl text-primary">Crafting your recipe...</p>
-            <p className="text-foreground/70">Please wait while our AI chef gets to work.</p>
+            <p className="font-headline text-xl text-primary">Creando tu receta...</p>
+            <p className="text-foreground/70">Por favor espera mientras nuestro chef de IA se pone a trabajar.</p>
           </div>
         )}
 
         {error && (
           <Alert variant="destructive" className="mx-auto max-w-2xl">
             <AlertCircle className="h-4 w-4" />
-            <AlertTitle>Generation Failed</AlertTitle>
+            <AlertTitle>Falló la Generación</AlertTitle>
             <AlertDescription>{error}</AlertDescription>
           </Alert>
         )}
@@ -76,7 +76,7 @@ export default function Home() {
         {recipe && <RecipeDisplay recipe={recipe} />}
 
         {showWelcome && !loading && !error && !recipe && heroImage && (
-          <div className="mt-12 overflow-hidden rounded-lg border bg-card shadow-sm">
+          <div className="mt-12 overflow-hidden rounded-lg border bg-card shadow-lg transition-all duration-300 hover:shadow-2xl">
             <div className="relative aspect-[2/1] w-full">
               <Image
                 src={heroImage.imageUrl}
@@ -86,10 +86,10 @@ export default function Home() {
                 data-ai-hint={heroImage.imageHint}
                 priority
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
               <div className="absolute bottom-0 left-0 p-6 md:p-8">
-                <h2 className="font-headline text-3xl font-bold text-white md:text-4xl">Welcome to Herbology</h2>
-                <p className="mt-2 max-w-2xl text-lg text-white/90">Your personal AI-powered sous-chef, ready to turn your ingredients into a culinary masterpiece.</p>
+                <h2 className="font-headline text-3xl font-bold text-white md:text-4xl">Bienvenido a Herbology</h2>
+                <p className="mt-2 max-w-2xl text-lg text-white/90">Tu sous-chef personal con IA, listo para convertir tus ingredientes en una obra maestra culinaria.</p>
               </div>
             </div>
           </div>

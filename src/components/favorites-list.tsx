@@ -42,10 +42,10 @@ export function FavoritesList() {
 
   if (favorites.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center rounded-lg border-2 border-dashed bg-card p-12 text-center">
+      <div className="flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-border bg-card p-12 text-center">
         <Inbox className="h-16 w-16 text-muted-foreground" />
-        <h2 className="mt-6 font-headline text-2xl font-semibold">No Favorites Yet</h2>
-        <p className="mt-2 text-muted-foreground">Your saved recipes will appear here. Start by generating a recipe!</p>
+        <h2 className="mt-6 font-headline text-2xl font-semibold">Aún no hay favoritos</h2>
+        <p className="mt-2 text-muted-foreground">Tus recetas guardadas aparecerán aquí. ¡Empieza por generar una receta!</p>
       </div>
     );
   }
@@ -53,7 +53,7 @@ export function FavoritesList() {
   return (
     <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
       {favorites.map((recipe) => (
-        <Card key={recipe.id} className="flex flex-col">
+        <Card key={recipe.id} className="flex flex-col transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
           <CardHeader>
             <CardTitle className="font-headline text-2xl">{recipe.recipeName}</CardTitle>
             <CardDescription>{recipe.ingredients.slice(0, 3).join(', ')}...</CardDescription>
@@ -66,20 +66,20 @@ export function FavoritesList() {
               <AlertDialogTrigger asChild>
                 <Button variant="destructive" size="sm">
                   <Trash2 className="mr-2 h-4 w-4" />
-                  Remove
+                  Eliminar
                 </Button>
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
-                  <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                  <AlertDialogTitle>¿Estás seguro?</AlertDialogTitle>
                   <AlertDialogDescription>
-                    This will permanently remove &quot;{recipe.recipeName}&quot; from your favorites.
+                    Esto eliminará permanentemente &quot;{recipe.recipeName}&quot; de tus favoritos.
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogCancel>Cancelar</AlertDialogCancel>
                   <AlertDialogAction onClick={() => removeFavorite(recipe.id)}>
-                    Remove
+                    Eliminar
                   </AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>

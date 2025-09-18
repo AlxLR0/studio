@@ -4,7 +4,7 @@ import { generateRecipeFromIngredients } from '@/ai/flows/generate-recipe-from-i
 import { z } from 'zod';
 import type { Recipe } from '@/lib/types';
 
-const inputSchema = z.string().min(3, 'Please enter at least one ingredient.');
+const inputSchema = z.string().min(3, 'Por favor, introduce al menos un ingrediente.');
 
 export async function getRecipe(ingredients: string): Promise<{
   recipe: (Recipe & { id: string }) | null;
@@ -33,6 +33,6 @@ export async function getRecipe(ingredients: string): Promise<{
 
   } catch (e) {
     console.error(e);
-    return { recipe: null, error: 'Failed to generate recipe. The AI chef might be busy. Please try again later.' };
+    return { recipe: null, error: 'No se pudo generar la receta. El chef de IA podría estar ocupado. Por favor, inténtalo de nuevo más tarde.' };
   }
 }

@@ -12,7 +12,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 const formSchema = z.object({
   ingredients: z.string().min(3, {
-    message: 'Please enter at least one ingredient.',
+    message: 'Por favor, introduce al menos un ingrediente.',
   }),
 });
 
@@ -34,9 +34,9 @@ export function IngredientForm({ onSubmit, loading }: IngredientFormProps) {
   }
 
   return (
-    <Card className="shadow-lg">
+    <Card className="shadow-lg transition-shadow duration-300 hover:shadow-xl">
       <CardHeader>
-        <CardTitle className="font-headline text-2xl">Enter Your Ingredients</CardTitle>
+        <CardTitle className="font-headline text-2xl">Introduce tus Ingredientes</CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -48,7 +48,7 @@ export function IngredientForm({ onSubmit, loading }: IngredientFormProps) {
                 <FormItem>
                   <FormControl>
                     <Textarea
-                      placeholder="e.g., chicken breast, broccoli, garlic, olive oil"
+                      placeholder="ej: pechuga de pollo, brócoli, ajo, aceite de oliva"
                       className="min-h-[100px] resize-none"
                       {...field}
                     />
@@ -59,7 +59,7 @@ export function IngredientForm({ onSubmit, loading }: IngredientFormProps) {
             />
             <Button type="submit" disabled={loading} className="w-full" size="lg">
               <Sparkles className="mr-2" />
-              {loading ? 'Generating...' : 'Generate Recipe'}
+              {loading ? 'Generando...' : 'Generar Receta'}
             </Button>
           </form>
         </Form>
