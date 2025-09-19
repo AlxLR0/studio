@@ -3,15 +3,16 @@
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Sparkles, Utensils, HeartPulse, ChefHat, Flame } from 'lucide-react';
+import { Sparkles, Utensils, HeartPulse, ChefHat, Flame, CookingPot } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Switch } from '@/components/ui/switch';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Separator } from './ui/separator';
-import type { RecipePreferences } from '@/app/actions';
+import React from 'react';
 
 const formSchema = z.object({
   ingredients: z.string().min(3, {
@@ -19,9 +20,12 @@ const formSchema = z.object({
   }),
   restrictions: z.array(z.string()),
   style: z.string().default('casera'),
-  specialConditions: z.string().default('ninguna'),
+  specialConditions: z.array(z.string()).default(['ninguna']),
   flavor: z.string().default('normal'),
+  devices: z.array(z.string()).default(['Estufa']),
 });
+
+export type RecipePreferences = Omit<z.infer<typeof formSchema>, 'ingredients'>;
 
 type PreferencesFormProps = {
   onSubmit: (ingredients: string, preferences: RecipePreferences) => void;
@@ -37,6 +41,26 @@ const restrictionOptions = [
   { id: 'sin gluten', label: 'Sin Gluten' },
 ];
 
+const specialConditionOptions = [
+  { id: 'ninguna', label: 'Ninguna' },
+  { id: 'gastritis', label: 'Gastritis' },
+  { id: 'diabetes', label: 'Diabetes' },
+  { id: 'hipertensión', label: 'Hipertensión' },
+  { id: 'aumentar masa muscular', label: 'Aumentar Masa Muscular' },
+  { id: 'bajar de peso', label: 'Bajar de Peso' },
+  { id: 'apta para niños', label: 'Apta para Niños' },
+];
+
+const deviceOptions = [
+  { id: 'Estufa', label: 'Estufa' },
+  { id: 'Horno', label: 'Horno' },
+  { id: 'Freidora de aire', label: 'Freidora de aire' },
+  { id: 'Microondas', label: 'Microondas' },
+  { id: 'Olla de presión', label: 'Olla de presión' },
+  { id: 'Parrilla', label: 'Parrilla' },
+  { id: 'Vaporera', label: 'Vaporera' },
+];
+
 export function PreferencesForm({ onSubmit, loading }: PreferencesFormProps) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -44,10 +68,25 @@ export function PreferencesForm({ onSubmit, loading }: PreferencesFormProps) {
       ingredients: '',
       restrictions: [],
       style: 'casera',
-      specialConditions: 'ninguna',
+      specialConditions: ['ninguna'],
       flavor: 'normal',
+      devices: ['Estufa'],
     },
   });
+
+  const specialConditions = form.watch('specialConditions');
+
+  React.useEffect(() => {
+    const lastSelected = specialConditions[specialConditions.length - 1];
+    if (lastSelected === 'ninguna' && specialConditions.length > 1) {
+      form.setValue('specialConditions', ['ninguna']);
+    } else if (lastSelected !== 'ninguna' && specialConditions.includes('ninguna')) {
+      form.setValue('specialConditions', specialConditions.filter(c => c !== 'ninguna'));
+    }
+    if (specialConditions.length === 0) {
+      form.setValue('specialConditions', ['ninguna']);
+    }
+  }, [specialConditions, form]);
 
   function handleSubmit(values: z.infer<typeof formSchema>) {
     const { ingredients, ...preferences } = values;
@@ -124,27 +163,46 @@ export function PreferencesForm({ onSubmit, loading }: PreferencesFormProps) {
                 />
               </div>
             </div>
-
+            
             <Separator />
 
             <div className="space-y-4">
                <FormLabel className="font-semibold flex items-center gap-2"><HeartPulse /> Salud y Dietas Especiales</FormLabel>
-               <Controller
-                  control={form.control}
-                  name="specialConditions"
-                  render={({ field }) => (
-                     <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                       {['ninguna', 'gastritis', 'diabetes', 'hipertensión', 'aumentar masa muscular', 'bajar de peso', 'apta para niños'].map(value => (
-                        <FormItem key={value} className="flex items-center space-x-2 space-y-0">
+               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {specialConditionOptions.map((item) => (
+                  <FormField
+                    key={item.id}
+                    control={form.control}
+                    name="specialConditions"
+                    render={({ field }) => {
+                      return (
+                        <FormItem
+                          key={item.id}
+                          className="flex flex-row items-start space-x-3 space-y-0"
+                        >
                           <FormControl>
-                            <RadioGroupItem value={value} id={`condition-${value}`} />
+                            <Checkbox
+                              checked={field.value?.includes(item.id)}
+                              onCheckedChange={(checked) => {
+                                return checked
+                                  ? field.onChange([...field.value, item.id])
+                                  : field.onChange(
+                                      field.value?.filter(
+                                        (value) => value !== item.id
+                                      )
+                                    )
+                              }}
+                            />
                           </FormControl>
-                          <FormLabel htmlFor={`condition-${value}`} className="font-normal capitalize cursor-pointer">{value.replace(/ /g, ' ')}</FormLabel>
+                          <FormLabel className="font-normal capitalize">
+                            {item.label}
+                          </FormLabel>
                         </FormItem>
-                      ))}
-                    </RadioGroup>
-                  )}
-                />
+                      )
+                    }}
+                  />
+                ))}
+              </div>
             </div>
             
             <Separator />
@@ -175,6 +233,47 @@ export function PreferencesForm({ onSubmit, loading }: PreferencesFormProps) {
                               }}
                             />
                           </FormControl>
+                        </FormItem>
+                      )
+                    }}
+                  />
+                ))}
+              </div>
+            </div>
+
+            <Separator />
+
+            <div className="space-y-4">
+              <FormLabel className="font-semibold flex items-center gap-2"><CookingPot /> Dispositivos disponibles para cocinar</FormLabel>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {deviceOptions.map((item) => (
+                  <FormField
+                    key={item.id}
+                    control={form.control}
+                    name="devices"
+                    render={({ field }) => {
+                      return (
+                        <FormItem
+                          key={item.id}
+                          className="flex flex-row items-start space-x-3 space-y-0"
+                        >
+                          <FormControl>
+                            <Checkbox
+                              checked={field.value?.includes(item.id)}
+                              onCheckedChange={(checked) => {
+                                return checked
+                                  ? field.onChange([...field.value, item.id])
+                                  : field.onChange(
+                                      field.value?.filter(
+                                        (value) => value !== item.id
+                                      )
+                                    )
+                              }}
+                            />
+                          </FormControl>
+                          <FormLabel className="font-normal">
+                            {item.label}
+                          </FormLabel>
                         </FormItem>
                       )
                     }}

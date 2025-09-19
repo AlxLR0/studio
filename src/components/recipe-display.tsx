@@ -1,12 +1,13 @@
 'use client';
 
-import { Heart, Apple, ListChecks, Flame } from 'lucide-react';
+import { Heart, Apple, ListChecks, Flame, Clock, BarChart3 } from 'lucide-react';
 
 import type { Recipe } from '@/lib/types';
 import { useFavorites } from '@/hooks/use-favorites';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
+import { Badge } from '@/components/ui/badge';
 
 type RecipeDisplayProps = {
   recipe: Recipe;
@@ -41,6 +42,16 @@ export function RecipeDisplay({ recipe }: RecipeDisplayProps) {
           >
             <Heart className={isRecipeFavorite ? 'fill-red-500 text-red-500' : ''} />
           </Button>
+        </div>
+        <div className="flex flex-wrap items-center gap-4 pt-4">
+          <Badge variant="secondary" className="gap-1.5 py-1.5 px-3">
+            <Clock className="h-4 w-4" />
+            <span className="font-medium">{recipe.prepTime}</span>
+          </Badge>
+          <Badge variant="secondary" className="gap-1.5 py-1.5 px-3">
+            <BarChart3 className="h-4 w-4" />
+            <span className="font-medium capitalize">{recipe.difficulty}</span>
+          </Badge>
         </div>
       </CardHeader>
       <CardContent className="space-y-8 p-6">
