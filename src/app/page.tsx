@@ -5,11 +5,11 @@ import Image from 'next/image';
 import { AlertCircle, LoaderCircle } from 'lucide-react';
 
 import type { Recipe } from '@/lib/types';
-import { getRecipe, RecipePreferences } from '@/app/actions';
+import { getRecipe } from '@/app/actions';
 import { RecipeDisplay } from '@/components/recipe-display';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-import { PreferencesForm } from '@/components/preferences-form';
+import { PreferencesForm, RecipePreferences } from '@/components/preferences-form';
 
 export default function Home() {
   const [recipe, setRecipe] = useState<Recipe | null>(null);
@@ -89,7 +89,7 @@ export default function Home() {
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
               <div className="absolute bottom-0 left-0 p-6 md:p-8">
                 <h2 className="font-headline text-3xl font-bold text-white md:text-4xl">Bienvenido a Herbology</h2>
-                <p className="mt-2 max-w-2xl text-lg text-white/90">Tu sous-chef personal con IA, listo para convertir tus ingredientes en una obra maestra culinaria.</p>
+                <p className="mt-2 max-w-2xl text-lg text-white/90">Tu chef personal con IA, listo para convertir tus ingredientes en una obra maestra culinaria.</p>
               </div>
             </div>
           </div>
