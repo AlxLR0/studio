@@ -2,14 +2,14 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { AlertCircle, LoaderCircle, Sparkles } from 'lucide-react';
+import { AlertCircle, LoaderCircle } from 'lucide-react';
 
 import type { Recipe } from '@/lib/types';
-import { getRecipe } from '@/app/actions';
-import { IngredientForm } from '@/components/ingredient-form';
+import { getRecipe, RecipePreferences } from '@/app/actions';
 import { RecipeDisplay } from '@/components/recipe-display';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
+import { PreferencesForm } from '@/components/preferences-form';
 
 export default function Home() {
   const [recipe, setRecipe] = useState<Recipe | null>(null);
@@ -19,13 +19,13 @@ export default function Home() {
 
   const heroImage = PlaceHolderImages.find(img => img.id === 'homepage-hero');
 
-  const onGenerate = async (ingredients: string) => {
+  const onGenerate = async (ingredients: string, preferences: RecipePreferences) => {
     setLoading(true);
     setError(null);
     setRecipe(null);
     setShowWelcome(false);
 
-    const result = await getRecipe(ingredients);
+    const result = await getRecipe(ingredients, preferences);
     
     if (result.error) {
       setError(result.error);
@@ -52,16 +52,16 @@ export default function Home() {
         </p>
       </div>
 
-      <div className="mx-auto mt-8 max-w-2xl">
-        <IngredientForm onSubmit={onGenerate} loading={loading} />
+      <div className="mx-auto mt-8 grid max-w-4xl grid-cols-1 gap-8">
+        <PreferencesForm onSubmit={onGenerate} loading={loading} />
       </div>
 
       <div className="mx-auto mt-8 max-w-4xl">
         {loading && (
           <div className="flex flex-col items-center justify-center gap-4 py-16 text-center">
             <LoaderCircle className="h-12 w-12 animate-spin text-primary" />
-            <p className="font-headline text-xl text-primary">Creando tu receta...</p>
-            <p className="text-foreground/70">Por favor espera mientras nuestro chef de IA se pone a trabajar.</p>
+            <p className="font-headline text-xl text-primary">Creando tu receta personalizada...</p>
+            <p className="text-foreground/70">Nuestro chef de IA está adaptando la receta a tus gustos y necesidades.</p>
           </div>
         )}
 
