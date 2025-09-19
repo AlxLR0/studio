@@ -2,9 +2,9 @@
   "placeholderImages": [
     {
       "id": "homepage-hero",
-      "description": "A vibrant flat lay of fresh herbs and spices on a dark slate background.",
-      "imageUrl": "https://picsum.photos/seed/herbology/1200/600",
-      "imageHint": "herbs cooking"
+      "description": "Una vibrante composición de ingredientes frescos y especias sobre una superficie de cocina.",
+      "imageUrl": "https://picsum.photos/seed/cocina/1200/600",
+      "imageHint": "ingredientes frescos"
     }
   ]
 }
