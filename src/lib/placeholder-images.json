@@ -3,7 +3,7 @@
     {
       "id": "homepage-hero",
       "description": "Un plato delicioso y bien presentado, listo para ser disfrutado.",
-      "imageUrl": "https://picsum.photos/seed/receta/1200/600",
+      "imageUrl": "https://picsum.photos/seed/plato/1200/600",
       "imageHint": "plato cocinado"
     }
   ]
