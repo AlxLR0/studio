@@ -2,9 +2,9 @@
   "placeholderImages": [
     {
       "id": "homepage-hero",
-      "description": "Una vibrante composición de ingredientes frescos y especias sobre una superficie de cocina.",
-      "imageUrl": "https://picsum.photos/seed/cocina/1200/600",
-      "imageHint": "ingredientes frescos"
+      "description": "Un plato delicioso y bien presentado, listo para ser disfrutado.",
+      "imageUrl": "https://picsum.photos/seed/receta/1200/600",
+      "imageHint": "plato cocinado"
     }
   ]
 }
