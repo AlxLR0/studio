@@ -6,7 +6,7 @@ import type { Recipe } from '@/lib/types';
 
 const ingredientsSchema = z.string().min(3, 'Por favor, introduce al menos un ingrediente.');
 
-export const preferencesSchema = z.object({
+const preferencesSchema = z.object({
   restrictions: z.array(z.string()),
   style: z.string(),
   specialConditions: z.string(),
