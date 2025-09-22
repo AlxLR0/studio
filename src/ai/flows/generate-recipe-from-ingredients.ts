@@ -25,7 +25,7 @@ export type GenerateRecipeFromIngredientsInput = z.infer<typeof GenerateRecipeFr
 const GenerateRecipeFromIngredientsOutputSchema = z.object({
   recipeName: z.string().describe('The name of the generated recipe. Should be creative and appealing.'),
   ingredients: z.array(z.string()).describe('The list of ingredients used in the recipe, with approximate quantities.'),
-  instructions: z.string().describe('Step-by-step instructions for cooking the recipe, formatted as a single string with newline characters.'),
+  instructions: z.string().describe('Step-by-step instructions for cooking the recipe, formatted as a single string with each step separated by a newline character (\\n). For example: "1. Do this.\\n2. Do that.\\n3. And so on."'),
   prepTime: z.string().describe('Total preparation time (e.g., "25 minutos").'),
   difficulty: z.string().describe('Difficulty level ("fácil", "medio", "avanzado").'),
   healthNote: z.string().describe('A positive and encouraging nutritional or health note related to the recipe and user preferences.'),
@@ -67,7 +67,7 @@ const prompt = ai.definePrompt({
   2.  **Genera una receta única.** No uses ingredientes que el usuario no tiene, a menos que sea una sustitución lógica y saludable que expliques.
   3.  **Crea un nombre de receta atractivo.** Si el estilo es 'gourmet', que sea elaborado. Si es 'casera', que sea simple y familiar.
   4.  **Lista los ingredientes** con cantidades aproximadas. Aclara cualquier sustitución.
-  5.  **Escribe las instrucciones paso a paso,** numeradas y claras, en un solo bloque de texto separado por saltos de línea (\n). Usa verbos de acción y solo métodos de cocción compatibles con los dispositivos disponibles.
+  5.  **Escribe las instrucciones paso a paso,** MUY IMPORTANTE: en un solo bloque de texto donde cada paso está separado por un salto de línea (\\n). Por ejemplo: "1. Primer paso.\\n2. Segundo paso.\\n3. Tercer paso.".
   6.  **Estima el tiempo de preparación total** y el **nivel de dificultad**.
   7.  **Añade una 'healthNote' (nota de salud)** al final. Debe ser una frase positiva y relevante para la condición especial o el estilo de la receta.
 

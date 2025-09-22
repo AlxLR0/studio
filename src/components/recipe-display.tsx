@@ -25,6 +25,24 @@ export function RecipeDisplay({ recipe }: RecipeDisplayProps) {
     }
   };
 
+  const getInstructions = (instructions: string) => {
+    // Primero intenta dividir por salto de línea.
+    const byNewline = instructions.split('\n').filter(step => step.trim());
+    if (byNewline.length > 1) {
+      return byNewline;
+    }
+    // Si no, intenta dividir por un número seguido de un punto (ej. "1.", "2.").
+    // Esto sirve como respaldo si la IA no usa saltos de línea.
+    const byNumber = instructions.split(/(?=\d+\.\s)/).filter(step => step.trim());
+    if (byNumber.length > 1) {
+      return byNumber;
+    }
+    // Si todo falla, devuelve la instrucción original en un array.
+    return [instructions];
+  };
+
+  const instructions = getInstructions(recipe.instructions);
+
   return (
     <Card className="w-full animate-in fade-in-50 duration-500 overflow-hidden border-primary/20 shadow-lg bg-card/80 backdrop-blur-sm">
       <CardHeader className="bg-primary/5">
@@ -77,7 +95,7 @@ export function RecipeDisplay({ recipe }: RecipeDisplayProps) {
           </h3>
           <Separator className="my-3" />
           <div className="prose prose-p:my-2 prose-ol:my-2 prose-ol:list-decimal prose-ol:pl-5 space-y-3 text-foreground/90 dark:prose-invert">
-            {recipe.instructions.split('\n').filter(step => step.trim()).map((step, index) => (
+            {instructions.map((step, index) => (
                 <p key={index} className="flex items-start gap-3">
                   <span className="font-bold text-primary">{index + 1}.</span>
                   <span>{step.replace(/^\d+\.\s*/, '')}</span>
