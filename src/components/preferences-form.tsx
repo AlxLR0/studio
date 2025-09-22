@@ -129,7 +129,7 @@ export function PreferencesForm({ onSubmit, loading }: PreferencesFormProps) {
                   control={form.control}
                   name="style"
                   render={({ field }) => (
-                    <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="grid grid-cols-2 gap-4">
+                    <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       {['casera', 'gourmet', 'saludable/fit', 'rápida y sencilla'].map(value => (
                         <FormItem key={value} className="flex items-center space-x-2 space-y-0">
                           <FormControl>
@@ -149,7 +149,7 @@ export function PreferencesForm({ onSubmit, loading }: PreferencesFormProps) {
                   control={form.control}
                   name="flavor"
                   render={({ field }) => (
-                     <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="grid grid-cols-2 gap-4">
+                     <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                        {['normal', 'más especias', 'más suave', 'con aderezos', 'sin condimentos'].map(value => (
                         <FormItem key={value} className="flex items-center space-x-2 space-y-0">
                           <FormControl>
@@ -168,7 +168,7 @@ export function PreferencesForm({ onSubmit, loading }: PreferencesFormProps) {
 
             <div className="space-y-4">
                <FormLabel className="font-semibold flex items-center gap-2"><HeartPulse /> Salud y Dietas Especiales</FormLabel>
-               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {specialConditionOptions.map((item) => (
                   <FormField
                     key={item.id}
@@ -209,7 +209,7 @@ export function PreferencesForm({ onSubmit, loading }: PreferencesFormProps) {
 
             <div className="space-y-4">
               <FormLabel className="font-semibold">Restricciones Alimenticias</FormLabel>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {restrictionOptions.map((item) => (
                   <FormField
                     key={item.id}
@@ -245,7 +245,7 @@ export function PreferencesForm({ onSubmit, loading }: PreferencesFormProps) {
 
             <div className="space-y-4">
               <FormLabel className="font-semibold flex items-center gap-2"><CookingPot /> Dispositivos disponibles para cocinar</FormLabel>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {deviceOptions.map((item) => (
                   <FormField
                     key={item.id}
