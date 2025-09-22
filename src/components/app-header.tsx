@@ -9,7 +9,7 @@ export function AppHeader() {
       <div className="container flex h-16 max-w-screen-2xl items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
           <ChefHat className="h-7 w-7 text-primary" />
-          <span className="font-headline text-xl font-bold text-primary">
+          <span className="font-headline text-xl font-bold text-primary whitespace-nowrap">
             Cookify AI
           </span>
         </Link>
