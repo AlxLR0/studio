@@ -65,9 +65,15 @@ export function FavoritesList() {
     <>
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {favorites.map((recipe) => (
-           <Dialog key={recipe.id} onOpenChange={(isOpen) => !isOpen && setSelectedRecipe(null)}>
+           <Dialog key={recipe.id} onOpenChange={(isOpen) => {
+            if (!isOpen) {
+              setSelectedRecipe(null)
+            } else {
+              setSelectedRecipe(recipe)
+            }
+           }}>
             <Card className="flex flex-col transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-              <DialogTrigger asChild onClick={() => setSelectedRecipe(recipe)} className="flex-grow text-left cursor-pointer">
+              <DialogTrigger asChild className="flex-grow text-left cursor-pointer">
                 <div>
                   <CardHeader>
                     <CardTitle className="font-headline text-2xl">{recipe.recipeName}</CardTitle>
@@ -80,7 +86,7 @@ export function FavoritesList() {
               </DialogTrigger>
               <CardFooter className="justify-between">
                 <DialogTrigger asChild>
-                   <Button variant="outline" size="sm" onClick={() => setSelectedRecipe(recipe)}>
+                   <Button variant="outline" size="sm">
                       <Eye className="mr-2 h-4 w-4" />
                       Ver Receta
                     </Button>
@@ -115,7 +121,10 @@ export function FavoritesList() {
       {selectedRecipe && (
         <Dialog open={!!selectedRecipe} onOpenChange={(isOpen) => !isOpen && setSelectedRecipe(null)}>
             <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
-                <RecipeDisplay recipe={selectedRecipe} />
+              <DialogHeader>
+                <DialogTitle className="sr-only">{selectedRecipe.recipeName}</DialogTitle>
+              </DialogHeader>
+              <RecipeDisplay recipe={selectedRecipe} />
             </DialogContent>
         </Dialog>
       )}
