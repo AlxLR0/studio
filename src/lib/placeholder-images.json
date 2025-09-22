@@ -2,9 +2,9 @@
   "placeholderImages": [
     {
       "id": "homepage-hero",
-      "description": "Un plato delicioso y bien presentado, listo para ser disfrutado.",
-      "imageUrl": "https://picsum.photos/seed/plato/1200/600",
-      "imageHint": "plato cocinado"
+      "description": "Un delicioso plato de comida preparada, listo para ser disfrutado.",
+      "imageUrl": "https://picsum.photos/seed/comida-preparada/1200/600",
+      "imageHint": "comida preparada"
     }
   ]
 }
