@@ -10,7 +10,7 @@ export function AppHeader() {
         <Link href="/" className="flex items-center gap-2">
           <ChefHat className="h-7 w-7 text-primary" />
           <span className="font-headline text-xl font-bold text-primary">
-            Herbology AI
+            Cookify AI
           </span>
         </Link>
         <div className="flex items-center gap-2">

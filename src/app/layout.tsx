@@ -6,7 +6,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { ThemeProvider } from '@/components/theme-provider';
 
 export const metadata: Metadata = {
-  title: 'Herbology AI - Generador de Recetas',
+  title: 'Cookify AI - Generador de Recetas',
   description: 'Una simple aplicación para generar recetas a partir de los ingredientes que un usuario introduce.',
 };
 

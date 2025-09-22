@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import type { Recipe } from '@/lib/types';
 
-const FAVORITES_KEY = 'herbology-ai-favorites';
+const FAVORITES_KEY = 'cookify-ai-favorites';
 
 export function useFavorites() {
   const [favorites, setFavorites] = useState<Recipe[]>([]);
