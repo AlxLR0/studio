@@ -88,7 +88,7 @@ export default function Home() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
               <div className="absolute bottom-0 left-0 p-6 md:p-8">
-                <h2 className="font-headline text-3xl font-bold text-white md:text-4xl">Bienvenido a Cookify</h2>
+                <h2 className="font-headline text-2xl font-bold text-white md:text-4xl">Bienvenido a Cookify</h2>
                 <p className="mt-2 max-w-2xl text-lg text-white/90">Tu chef personal con IA, listo para convertir tus ingredientes en una obra maestra culinaria.</p>
               </div>
             </div>
