@@ -1,5 +1,7 @@
 # 🍳 Cookify AI - Tu Asistente de Cocina Inteligente
 
+**Visita la aplicación en vivo 👉 [cookify-ai-app.vercel.app](https://cookify-ai-app.vercel.app/)**
+
 ![Cookify AI Hero](https://picsum.photos/seed/comida-preparada/1200/600)
 
 **Cookify AI** es una aplicación web innovadora diseñada para transformar tu experiencia en la cocina. ¿Tienes ingredientes en tu refri y no sabes qué preparar? ¡No hay problema! Simplemente introduce los ingredientes que tienes a la mano, ajusta tus preferencias, y deja que nuestra inteligencia artificial cree una receta única, deliciosa y personalizada para ti.
@@ -87,7 +89,7 @@ La aplicación estará disponible en [http://localhost:9002](http://localhost:90
 
 ## 🌐 Despliegue en Vercel
 
-Si quieres desplegar tu proyecto en una plataforma como Vercel, el proceso es muy sencillo. Sin embargo, es crucial que configures la variable de entorno para que la IA funcione en producción.
+Desplegar este proyecto en una plataforma como Vercel es muy sencillo. Sin embargo, es **crucial** que configures la variable de entorno para que la IA funcione correctamente en producción.
 
 1.  **Importa tu proyecto de GitHub a Vercel.**
 2.  **Configura las variables de entorno:**
