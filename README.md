@@ -85,4 +85,18 @@ La aplicación estará disponible en [http://localhost:9002](http://localhost:90
 
 ---
 
+## 🌐 Despliegue en Vercel
+
+Si quieres desplegar tu proyecto en una plataforma como Vercel, el proceso es muy sencillo. Sin embargo, es crucial que configures la variable de entorno para que la IA funcione en producción.
+
+1.  **Importa tu proyecto de GitHub a Vercel.**
+2.  **Configura las variables de entorno:**
+    -   En el panel de tu proyecto en Vercel, ve a **Settings > Environment Variables**.
+    -   Añade una nueva variable con los siguientes datos:
+        -   **Name:** `GEMINI_API_KEY`
+        -   **Value:** Pega tu clave de API de Google AI.
+3.  **Despliega (Deploy).** Vercel construirá y desplegará tu aplicación. ¡La IA debería funcionar sin problemas!
+
+---
+
 ¡Gracias por visitar el repositorio! Si tienes alguna idea o sugerencia, no dudes en abrir un *issue* o un *pull request*.
