@@ -40,14 +40,19 @@ export function RecipeDisplay({ recipe }: RecipeDisplayProps) {
   };
 
   const getInstructions = (instructions: string) => {
+    // Primero, intentar dividir por saltos de línea, que es el formato esperado
     const byNewline = instructions.split('\n').filter(step => step.trim());
     if (byNewline.length > 1) {
-      return byNewline;
+        return byNewline;
     }
+
+    // Como plan B, si la IA no respetó el formato, intentar dividir por el patrón "número-punto-espacio"
     const byNumber = instructions.split(/(?=\d+\.\s)/).filter(step => step.trim());
     if (byNumber.length > 1) {
-      return byNumber;
+        return byNumber;
     }
+
+    // Si todo lo demás falla, devolver la instrucción como un solo elemento
     return [instructions];
   };
 
@@ -77,19 +82,36 @@ ${recipe.healthNote}
   const handleDownloadPdf = () => {
     const input = recipeContentRef.current;
     if (!input) return;
-
+  
+    // Asigna un ID temporal al elemento para poder encontrarlo en el clon
+    const uniqueId = `pdf-content-${Date.now()}`;
+    input.id = uniqueId;
+  
     html2canvas(input, {
-      scale: 2, // Aumenta la resolución de la captura
-      backgroundColor: null, // Mantiene el fondo original
+      scale: 2,
+      backgroundColor: null,
       onclone: (document) => {
-        // Asegura que en el clon para el PDF el fondo sea blanco y texto negro
-        const clonedElement = document.getElementById(input.id);
+        const clonedElement = document.getElementById(uniqueId);
         if (clonedElement) {
-            clonedElement.style.backgroundColor = 'white';
-            Array.from(clonedElement.getElementsByTagName('*')).forEach(el => {
-                const htmlEl = el as HTMLElement;
-                htmlEl.style.color = 'black';
+          clonedElement.style.backgroundColor = 'white';
+          Array.from(clonedElement.getElementsByTagName('*')).forEach(el => {
+            const htmlEl = el as HTMLElement;
+            // Forzar color de texto a negro para la mayoría de elementos
+            if (!htmlEl.closest('.pdf-preserve-color')) {
+              htmlEl.style.color = 'black';
+            }
+          });
+          
+          // Específicamente para las insignias, forzar texto blanco
+          const badges = clonedElement.querySelectorAll('[data-badge-pdf]');
+          badges.forEach(badge => {
+            const badgeEl = badge as HTMLElement;
+            badgeEl.style.color = 'white'; // Letras blancas
+            const icons = badgeEl.getElementsByTagName('svg');
+            Array.from(icons).forEach(icon => {
+              icon.style.color = 'white'; // Iconos blancos
             });
+          });
         }
       }
     }).then((canvas) => {
@@ -102,13 +124,13 @@ ${recipe.healthNote}
       const ratio = canvasWidth / canvasHeight;
       const width = pdfWidth;
       const height = width / ratio;
-
+  
       let position = 0;
       let heightLeft = height;
-
+  
       pdf.addImage(imgData, 'PNG', 0, position, width, height);
       heightLeft -= pdfHeight;
-
+  
       while (heightLeft > 0) {
         position = heightLeft - height;
         pdf.addPage();
@@ -118,12 +140,15 @@ ${recipe.healthNote}
       
       const fileName = `Receta-${recipe.recipeName.replace(/\s+/g, '-')}.pdf`;
       pdf.save(fileName);
+  
+      // Limpiar el ID
+      input.removeAttribute('id');
     });
   };
 
   return (
     <Card id="recipe-card" className="w-full animate-in fade-in-50 duration-500 overflow-hidden border-primary/20 shadow-lg bg-card/80 backdrop-blur-sm">
-      <div ref={recipeContentRef} id="recipe-content-for-pdf">
+      <div ref={recipeContentRef}>
         <CardHeader className="bg-primary/5">
           <div className="flex items-start justify-between gap-4">
             <div>
@@ -135,17 +160,17 @@ ${recipe.healthNote}
               size="icon"
               onClick={handleFavoriteToggle}
               aria-label={isRecipeFavorite ? 'Quitar de favoritos' : 'Guardar en favoritos'}
-              className="shrink-0 text-muted-foreground hover:text-red-500 print-hidden"
+              className="shrink-0 text-muted-foreground hover:text-red-500 print-hidden pdf-preserve-color"
             >
               <Heart className={isRecipeFavorite ? 'fill-red-500 text-red-500' : ''} />
             </Button>
           </div>
           <div className="flex flex-wrap items-center gap-4 pt-4">
-            <Badge variant="secondary" className="gap-1.5 py-1.5 px-3">
+            <Badge variant="secondary" className="gap-1.5 py-1.5 px-3" data-badge-pdf>
               <Clock className="h-4 w-4" />
               <span className="font-medium">{recipe.prepTime}</span>
             </Badge>
-            <Badge variant="secondary" className="gap-1.5 py-1.5 px-3">
+            <Badge variant="secondary" className="gap-1.5 py-1.5 px-3" data-badge-pdf>
               <BarChart3 className="h-4 w-4" />
               <span className="font-medium capitalize">{recipe.difficulty}</span>
             </Badge>
@@ -161,7 +186,7 @@ ${recipe.healthNote}
             <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3">
               {recipe.ingredients.map((ingredient, index) => (
                 <li key={index} className="flex items-start gap-3">
-                  <span className="text-primary pt-1">&#x2713;</span>
+                  <span className="text-primary pt-1 pdf-preserve-color">&#x2713;</span>
                   <span>{ingredient}</span>
                 </li>
               ))}
@@ -176,7 +201,7 @@ ${recipe.healthNote}
             <div className="prose prose-p:my-2 prose-ol:my-2 prose-ol:list-decimal prose-ol:pl-5 space-y-3 text-foreground/90 dark:prose-invert">
               {instructions.map((step, index) => (
                   <p key={index} className="flex items-start gap-3">
-                    <span className="font-bold text-primary">{index + 1}.</span>
+                    <span className="font-bold text-primary pdf-preserve-color">{index + 1}.</span>
                     <span>{step.replace(/^\d+\.\s*/, '')}</span>
                   </p>
               ))}
